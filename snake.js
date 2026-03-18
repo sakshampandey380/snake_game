@@ -70,26 +70,29 @@ function setDir(dir) {
 }
 
 /* SWIPE */
-let startX, startY;
+let startX = 0, startY = 0;
 
 canvas.addEventListener("touchstart", e => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
 });
 
-canvas.addEventListener("touchmove", e => {
-    let dxTouch = e.touches[0].clientX - startX;
-    let dyTouch = e.touches[0].clientY - startY;
+canvas.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+    let endY = e.changedTouches[0].clientY;
 
+    let dxTouch = endX - startX;
+    let dyTouch = endY - startY;
+
+    /* 🔥 VERY FAST RESPONSE (LOW THRESHOLD) */
     if (Math.abs(dxTouch) > Math.abs(dyTouch)) {
-        if (dxTouch > 0) setDir("right");
-        else setDir("left");
+        if (dxTouch > 10) setDir("right");
+        else if (dxTouch < -10) setDir("left");
     } else {
-        if (dyTouch > 0) setDir("down");
-        else setDir("up");
+        if (dyTouch > 10) setDir("down");
+        else if (dyTouch < -10) setDir("up");
     }
 });
-
 /* VIBRATION */
 function vibrate() {
     if (navigator.vibrate) navigator.vibrate(50);
