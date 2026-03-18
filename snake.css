@@ -12,7 +12,8 @@ html, body {
 
 /* BACKGROUND */
 body {
-    background: url('snake_bg.jpg') no-repeat center center/cover;
+    background: url('snake_bg.jpg') no-repeat center center;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,26 +25,23 @@ body {
 .overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.3));
+    background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(0,0,0,0.3));
 }
 
+/* GLASS */
 .glass {
     position: relative;
     z-index: 5;
-
-    /* Fallback (always works) */
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255,255,255,0.2);
     box-shadow: 0 0 25px rgba(0,255,204,0.2);
 }
 
-/* Apply blur ONLY if supported */
 @supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
     .glass {
         background: rgba(255,255,255,0.1);
         -webkit-backdrop-filter: blur(15px);
         backdrop-filter: blur(15px);
-        
     }
 }
 
@@ -59,30 +57,34 @@ body {
 .start-screen h1 {
     color: white;
     margin-bottom: 20px;
+    font-size: clamp(24px, 5vw, 32px);
 }
 
 /* SCOREBOARD */
 .scoreboard {
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 12px;
+    left: 12px;
     color: white;
-    padding: 12px 16px;
-    border-radius: 14px;
-    font-size: clamp(14px, 2vw, 18px);
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: clamp(13px, 2.5vw, 17px);
     z-index: 5;
 }
 
 /* CANVAS */
 canvas {
-    width: min(90vw, 420px);
-    height: min(90vw, 420px);
-    max-height: 80vh;
+    width: min(92vw, 420px);
+    height: min(92vw, 420px);
+    max-height: 85vh;
     background: rgba(0,0,0,0.5);
     border-radius: 20px;
     box-shadow: 0 0 40px #00ffcc;
     animation: glow 2s infinite;
     z-index: 2;
+
+    /* 🔥 IMPORTANT FOR SWIPE */
+    touch-action: none;
 }
 
 /* GLOW */
@@ -95,13 +97,13 @@ canvas {
 /* POPUP */
 .popup {
     position: absolute;
-    width: min(90%, 350px);
-    padding: 25px;
+    width: min(90%, 320px);
+    padding: 22px;
     border-radius: 20px;
     text-align: center;
     color: white;
     transform: scale(0);
-    transition: 0.3s ease;
+    transition: 0.25s ease;
     z-index: 10;
 }
 
@@ -119,33 +121,28 @@ button {
     color: black;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.25s;
 }
 
 button:hover {
     transform: scale(1.1);
 }
 
-/* CONTROLS */
-.controls {
-    position: absolute;
-    bottom: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 60px);
-    gap: 10px;
-    justify-content: center;
-    z-index: 5;
-}
+/* 📱 EXTRA MOBILE OPTIMIZATION */
+@media (max-width: 480px) {
 
-.controls button {
-    width: 60px;
-    height: 60px;
-    font-size: 22px;
-}
+    body {
+        align-items: center;
+        justify-content: center;
+    }
 
-/* HIDE CONTROLS ON DESKTOP */
-@media (min-width: 900px) {
-    .controls {
-        display: none;
+    canvas {
+        width: 95vw;
+        height: 95vw;
+    }
+
+    .scoreboard {
+        top: 8px;
+        left: 8px;
     }
 }
