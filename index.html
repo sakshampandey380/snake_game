@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snake Game Pro</title>
+<link rel="stylesheet" href="snake.css">
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<!-- START SCREEN -->
+<div class="start-screen glass" id="startScreen">
+    <h1>🐍 Snake Pro</h1>
+        <button 
+            onmouseenter="startGame()" 
+            onclick="startGame()">
+            Start Game
+        </button>
+</div>
+
+<!-- SCORE -->
+<div class="scoreboard glass">
+    <div>Score: <span id="score">0</span></div>
+    <div>High: <span id="highScore">0</span></div>
+</div>
+
+<!-- GAME -->
+<canvas id="game"></canvas>
+
+<!-- POPUP -->
+<div class="popup glass" id="popup">
+    <h2 id="popupText"></h2>
+    <button onclick="restartGame()">Play Again</button>
+</div>
+
+<!-- MOBILE CONTROLS -->
+<div class="controls">
+    <button onclick="setDir('up')">⬆️</button>
+    <button onclick="setDir('left')">⬅️</button>
+    <button onclick="setDir('down')">⬇️</button>
+    <button onclick="setDir('right')">➡️</button>
+</div>
+
+<script src="snake.js"></script>
+</body>
+</html>

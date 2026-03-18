@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+/* BACKGROUND */
+body {
+    background: url('snake_bg.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* OVERLAY */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.3));
+}
+
+.glass {
+    position: relative;
+    z-index: 5;
+
+    /* Fallback (always works) */
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 25px rgba(0,255,204,0.2);
+}
+
+/* Apply blur ONLY if supported */
+@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+    .glass {
+        background: rgba(255,255,255,0.1);
+        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
+        
+    }
+}
+
+/* START SCREEN */
+.start-screen {
+    position: absolute;
+    text-align: center;
+    padding: 30px;
+    border-radius: 20px;
+    z-index: 10;
+}
+
+.start-screen h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* SCOREBOARD */
+.scoreboard {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: clamp(14px, 2vw, 18px);
+    z-index: 5;
+}
+
+/* CANVAS */
+canvas {
+    width: min(90vw, 420px);
+    height: min(90vw, 420px);
+    max-height: 80vh;
+    background: rgba(0,0,0,0.5);
+    border-radius: 20px;
+    box-shadow: 0 0 40px #00ffcc;
+    animation: glow 2s infinite;
+    z-index: 2;
+}
+
+/* GLOW */
+@keyframes glow {
+    0% { box-shadow: 0 0 10px #00ffcc; }
+    50% { box-shadow: 0 0 35px #00ffcc; }
+    100% { box-shadow: 0 0 10px #00ffcc; }
+}
+
+/* POPUP */
+.popup {
+    position: absolute;
+    width: min(90%, 350px);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    transform: scale(0);
+    transition: 0.3s ease;
+    z-index: 10;
+}
+
+.popup.show {
+    transform: scale(1);
+}
+
+/* BUTTON */
+button {
+    margin-top: 15px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #00ffcc, #00ccff);
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+/* CONTROLS */
+.controls {
+    position: absolute;
+    bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 60px);
+    gap: 10px;
+    justify-content: center;
+    z-index: 5;
+}
+
+.controls button {
+    width: 60px;
+    height: 60px;
+    font-size: 22px;
+}
+
+/* HIDE CONTROLS ON DESKTOP */
+@media (min-width: 900px) {
+    .controls {
+        display: none;
+    }
+}
