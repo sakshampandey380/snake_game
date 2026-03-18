@@ -36,22 +36,12 @@ function randomFood() {
     };
 }
 
-/* 🔥 NEW: Start Loop Function */
-function startLoop() {
-    clearInterval(gameLoop);
-    function gameLoopFunc() {
-    draw();
-    requestAnimationFrame(gameLoopFunc);
-}
-gameLoopFunc();
-}
-
 /* START */
 function startGame() {
     document.getElementById("startScreen").style.display = "none";
 
     init();
-    speed = 150;  // 🔥 reset speed
+    speed = 180;  // 🔥 reset speed
     startLoop();
 
     document.documentElement.requestFullscreen().catch(()=>{});
@@ -160,10 +150,10 @@ function draw() {
         document.getElementById("score").innerText = score;
 
         /* 🔥 NEW: Speed Increase */
-        if (speed > 70) {
-            speed -= 5;
-            startLoop();
-        }
+        if (speed > 120) {  // stop getting too fast
+    speed -= 3;     // slower increase
+    startLoop();
+}
 
         if (score > highScore) {
             highScore = score;
