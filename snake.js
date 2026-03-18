@@ -21,7 +21,7 @@ const gameOverSound = new Audio("https://actions.google.com/sounds/v1/cartoon/co
 
 /* INIT */
 function init() {
-    snake = [{x: 200, y: 200}];
+    snake = [{x: 200, y: 200, px: 200, py: 200}];
     dx = box;
     dy = 0;
     score = 0;
@@ -39,7 +39,11 @@ function randomFood() {
 /* 🔥 NEW: Start Loop Function */
 function startLoop() {
     clearInterval(gameLoop);
-    gameLoop = setInterval(draw, speed);
+    function gameLoopFunc() {
+    draw();
+    requestAnimationFrame(gameLoopFunc);
+}
+gameLoopFunc();
 }
 
 /* START */
@@ -104,11 +108,23 @@ function draw() {
 
     // Snake
     snake.forEach((part, i) => {
-        ctx.fillStyle = i === 0 ? "#00ffcc" : "#00cc99";
+
+    // Interpolation for smooth motion
+    part.px += (part.x - part.px) * 0.4;
+    part.py += (part.y - part.py) * 0.4;
+
+        let gradient = ctx.createLinearGradient(part.px, part.py, part.px + box, part.py + box);
+        gradient.addColorStop(0, "#00ffcc");
+        gradient.addColorStop(1, "#007766");
+        
+        ctx.fillStyle = gradient;
         ctx.shadowBlur = 15;
         ctx.shadowColor = "#00ffcc";
-        ctx.fillRect(part.x, part.y, box, box);
-    });
+
+    ctx.beginPath();
+    ctx.roundRect(part.px, part.py, box, box, 6);
+    ctx.fill();
+});;
 
     // Food
     ctx.fillStyle = "#ff4444";
@@ -119,9 +135,11 @@ function draw() {
     ctx.fill();
 
     let head = {
-        x: snake[0].x + dx,
-        y: snake[0].y + dy
-    };
+    x: snake[0].x + dx,
+    y: snake[0].y + dy,
+    px: snake[0].x,
+    py: snake[0].y
+};
 
     // Collision
     if (
