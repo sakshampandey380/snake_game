@@ -36,6 +36,12 @@ function randomFood() {
     };
 }
 
+/* 🔥 NEW: Start Loop Function */
+function startLoop() {
+    clearInterval(gameLoop);
+    gameLoop = setInterval(draw, speed);
+}
+
 /* START */
 function startGame() {
     document.getElementById("startScreen").style.display = "none";
